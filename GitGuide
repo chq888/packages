@@ -1,0 +1,94 @@
+A GIT workflow when you receive a task
+
+1	git clone “git-repo-url”	Clone 1 project to local
+I recommend you should copy “git clone” command from gerrit	   
+2	git fetch Synchronize all changeset merged from repo	   
+ 	git fetch “branch-name”	Synchronize all changeset merged from repo for a special branch	   
+3	git checkout origin/master	Change workspace to last state of origin/master branch	   
+4	git checkout -b “new-branch-name-for-issue”	Create new branch and clone current state of current branch (here is origin/master)
+Switch workspace to this new branch	   
+5	git status 	Show all files changed of workspace base on HEAD 	   
+ 	git diff “file-path”	Show difference of current state with state of the last changeset	   
+ 	git diff	Show difference for all file changed	   
+ 	git checkout -- 	Undo one or many file changed
+	https://softuni.bg/downloads/svn/web-services-and-cloud/August-2015/2.%20ASP.NET-Web-API.pptx
+	https://softuni.bg/downloads/svn/web-services-and-cloud/April-2015/3.%20Consuming-Web-Services-with-CSharp-Homework.docx
+	https://softuni.bg/downloads/svn/javascript-applications/April-2015/4.%20Consuming-Remote-Data-Homework.docx
+        } // catch
+		Vietnamese_CI_AS
+git checkout -- {file-path}  => undo a file changed
+git checkout -- .   => undo all file changed
+ImapServer	"imap.mail.yahoo.com"	string
+ImapClient is not connected. - MailKit
+Recommend: create a alias
+git config --global alias.undo “checkout --”
+Using: git undo {file-path}
+ 	git add “file-path”	Confirm that this file should be add and will be committed  
+ 	git rm “file-path”	Confirm that this file should be remove and will be committed
+	git reflog
+git reset --hard HEAD@{0}	Undo a command
+6
+	git commit -m “ChangeSet Message”	Commit all files that confirmed (via git add/rm) to a NEW changeset for current branch
+ 	git commit --amend	Commit all files that confirmed (via git add/rm) to UPDATE a changeset for current branch
+ 	git commit -a -m “message”
+	git commit -a --amend	Use option “-a” to bypass step “git add/rm”n
+Commit all files that no need confirm
+7	git fetch	As step 2
+8	git rebase origin/master Apply last code from origin/master to current branch.
+Move and merge your changeset to head.
+9	git push origin HEAD:refs/for/master
+[3/10/2016 10:45:17 PM] ®huy: lets talk in more detail tomorrow and Saturday. if you know any friends who are developer as well in C# and .net i like to meet them as well
+[3/10/2016 10:45:28 PM] ®huy: 
+		Push the NEW changeset to master review branch
+	git review	I recommend you should setup a alias for push command
+git config --global alias.review “push origin HEAD:refs/for/master”  
+10	git reset --hard HEAD~1	Delete the NEW Changeset on current branch
+ 	git reset-hard	git config --global alias.reset-hard “reset --hard HEAD~1”
+11	git branch -d “new-branch-name-for-issue”	Delete the branch “new-branch-name-for-issue” on local repo	   
+12	Continue with step 2
+          RETURN TRUE;
+
+> git branch
+> git branch newfeature
+> git checkout newfeature
+
+discrete
+
+git rebase origin/master
+git mergetool
+git clean -f uTrust.Bean/uTrust.Bean.csproj.orig
+git log
+git rebase –continue
+git rebase origin/master
+git push origin HEAD:refs/for/master
+
+(fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+UNDOING COMMITTED CHANGES
+
+git revert HEAD
+
+I think other answers here are wrong, because this is a question of moving the mistakenly committed files back to the staging area from the previous commit, without cancelling the changes done to them. This can be done like Paritosh Singh suggested:
+git reset --soft HEAD^
+or
+git reset --soft HEAD~1
+Then reset the unwanted files in order to leave them out from the commit:
+
+Now commit again.
+git clean -d -x -f
+This removes untracked files, including directories (-d) and files ignored by git (-x).
+
+And combined way to delete untracked dir/files and ignored files.
+git clean -fxd {dir_path}
+
+How to quickly and easily remove a file from your most recent git commit while maintaing the changes in the working directory. Use 'git reset HEAD^' followed by 'git commit --amend'.
+Caveats: Don't modify your commits if they've been pushed upstream or shared (unless you know why and how and ... no, just don't).
+git reset HEAD^ -- $file
+git commit --amend
+
+
+that suggests you have an old project solution file - when you pull down a fresh set of files from github you should ensure you're using a clean solution. To do so, run the following git commands:
+git reset --hard
+git clean -d -f -x
